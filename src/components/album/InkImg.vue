@@ -1,17 +1,17 @@
 <template>
   <div class="img-container">
-    <div v-if="status=='loading'">
+    <div v-if="loading && status=='loading'">
       <i class="el-icon-loading"></i>
     </div>
-    <div v-else-if="status=='error'">
+    <div v-else-if="loading && status=='error'">
       <i class="el-icon-picture-outline"></i>
     </div>
     <img
       :src="src"
-      style="max-width:260px"
+      :style="imgStyle"
       @error="status='error'"
       @load="status='normal'"
-      v-show="status=='normal'"
+      v-show="!loading || status=='normal'"
     >
   </div>
 </template>
@@ -19,7 +19,12 @@
 export default {
   name: "InkImg",
   props: {
-    src: String
+    src: String,
+    imgStyle: String,
+    loading: {
+      type: Boolean,
+      default: true
+    }
   },
   watch: {
     src(nv) {
