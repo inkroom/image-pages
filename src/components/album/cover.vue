@@ -29,7 +29,7 @@
               <i class="el-icon-picture-outline"></i>
             </div>
             </el-image>-->
-            <div style="padding: 14px;">
+            <div style="padding: 14px;" class="text-ellipsis">
               <span>{{cell.name}}</span>
             </div>
           </el-card>
@@ -54,13 +54,13 @@ export default {
       },
       covers: [],
       title: "墨盒的相册",
-      album: null,
+      album: null
     };
   },
   watch: {
     title(nv) {
       document.title = nv;
-    },
+    }
   },
   created() {
     document.title = `墨盒的相册`;
@@ -110,44 +110,6 @@ export default {
           this.loadingInstance.close();
           this.$alert("相册暂不可用");
         });
-
-      // if (this.album) {
-      //   promise = axios.get(
-      //     `https://api.github.com/repos/${process.env.AUTHOR}/${
-      //       process.env.REPO
-      //     }/contents/${this.album}`
-      //   );
-      // } else {
-      //   promise = axios.get(
-      //     `https://api.github.com/repos/${process.env.AUTHOR}/${
-      //       process.env.REPO
-      //     }/contents/`
-      //   );
-      // }
-      // promise.then(res => {
-
-      //   res = res.data;
-      //   this.covers = [];
-      //   for (let i = 0; i < Math.floor(res.length / this.limit.col); i++) {
-      //     let row = [];
-      //     for (let j = i * this.limit.col; j < (i + 1) * this.limit.col; j++) {
-      //       row.push(res[j]);
-      //     }
-      //     this.covers.push(row);
-      //   }
-      //   this.loadingInstance.close();
-      // });
-    },
-    showAlbum(album) {
-      if (!this.album) {
-        console.debug("开始请求");
-        this.title = album.name;
-
-        this.album = album.name;
-        console.log("获取相册的内容");
-
-        this.$router.push(`/${album.name}`);
-      }
     }
   }
 };

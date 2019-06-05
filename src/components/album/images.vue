@@ -28,7 +28,7 @@
               <i class="el-icon-picture-outline"></i>
             </div>
           </el-image>-->
-          <div style="padding: 14px;">
+          <div style="padding: 14px;" text-ellipsis>
             <span>{{cell.name}}</span>
           </div>
         </el-card>
