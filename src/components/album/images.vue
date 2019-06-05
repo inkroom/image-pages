@@ -9,18 +9,17 @@
     </div>-->
     <el-row v-for="(row,i) in covers" :key="i" :gutter="20">
       <el-col v-for="(cell,j) in row" :key="j" :span="limit.span">
-        <router-link :to="cell.name">
-          <el-card :style="{cursor:album?'auto':'pointer'}">
-            <InkImg :src="getImgUrl(cell)" style="height:160px"></InkImg>
-            <!-- <div class="img-container" style>
+        <el-card :style="{cursor:album?'auto':'pointer'}" @click.native="showImg(cell)">
+          <InkImg :src="cell.download_url" style="height:160px"></InkImg>
+          <!-- <div class="img-container" style>
             <img
               :src="cell.download_url || getImgUrl(cell.name+'/'+cell.name+'01.jpg')"
               alt="图片挂了"
               style="max-width:260px"
               @error="imgError"
             >
-            </div>-->
-            <!-- <el-image
+          </div>-->
+          <!-- <el-image
             :src="cell.download_url || getImgUrl(cell.name+'/'+cell.name+'01.jpg')"
             style="width:100px;height:100px"
             fit="contain"
@@ -28,12 +27,11 @@
             <div slot="error" class="image-slot">
               <i class="el-icon-picture-outline"></i>
             </div>
-            </el-image>-->
-            <div style="padding: 14px;">
-              <span>{{cell.name}}</span>
-            </div>
-          </el-card>
-        </router-link>
+          </el-image>-->
+          <div style="padding: 14px;">
+            <span>{{cell.name}}</span>
+          </div>
+        </el-card>
       </el-col>
     </el-row>
   </div>
@@ -42,6 +40,7 @@
 import InkImg from "./InkImg";
 
 import { Loading } from "element-ui";
+
 import axios from "axios";
 
 export default {
@@ -55,22 +54,32 @@ export default {
       covers: [],
       title: "墨盒的相册",
       album: null,
+      loading: true
     };
   },
   watch: {
     title(nv) {
       document.title = nv;
     },
+    loading(nv, ov) {
+      if (nv) {
+        this.loadingInstance = Loading.service({
+          text: "正在努力加载中..."
+        });
+      } else {
+        this.loadingInstance.close();
+      }
+    }
   },
   created() {
-    document.title = `墨盒的相册`;
+    document.title = this.$route.params.album;
     this.getImages();
   },
   methods: {
-    getImgUrl(album) {
+    getImgUrl(path) {
       return `https://raw.githubusercontent.com/${process.env.AUTHOR}/${
         process.env.REPO
-      }/${process.env.BRANCH}/${album.name}/${album.cover}`;
+      }/${process.env.BRANCH}/${path}`;
     },
     getImages() {
       console.log("发送githu");
@@ -81,35 +90,6 @@ export default {
       });
 
       //获取封面
-
-      axios
-        .get(
-          `https://raw.githubusercontent.com/${process.env.AUTHOR}/${
-            process.env.REPO
-          }/${process.env.BRANCH}/config.json`
-        )
-        .then(res => {
-          console.log(res.data);
-          res = res.data;
-          this.covers = [];
-          for (let i = 0; i < Math.floor(res.length / this.limit.col); i++) {
-            let row = [];
-            for (
-              let j = i * this.limit.col;
-              j < (i + 1) * this.limit.col;
-              j++
-            ) {
-              row.push(res[j]);
-            }
-            this.covers.push(row);
-          }
-          this.loadingInstance.close();
-        })
-        .catch(e => {
-          console.error(e);
-          this.loadingInstance.close();
-          this.$alert("相册暂不可用");
-        });
 
       // if (this.album) {
       //   promise = axios.get(
@@ -124,30 +104,46 @@ export default {
       //     }/contents/`
       //   );
       // }
-      // promise.then(res => {
-
-      //   res = res.data;
-      //   this.covers = [];
-      //   for (let i = 0; i < Math.floor(res.length / this.limit.col); i++) {
-      //     let row = [];
-      //     for (let j = i * this.limit.col; j < (i + 1) * this.limit.col; j++) {
-      //       row.push(res[j]);
-      //     }
-      //     this.covers.push(row);
-      //   }
-      //   this.loadingInstance.close();
-      // });
+      axios
+        .get(
+          `https://api.github.com/repos/${process.env.AUTHOR}/${
+            process.env.REPO
+          }/contents/${this.$route.params.album}`
+        )
+        .then(res => {
+          res = res.data;
+          this.covers = [];
+          for (let i = 0; i < Math.floor(res.length / this.limit.col); i++) {
+            let row = [];
+            for (
+              let j = i * this.limit.col;
+              j < (i + 1) * this.limit.col;
+              j++
+            ) {
+              row.push(res[j]);
+            }
+            this.covers.push(row);
+          }
+          this.loadingInstance.close();
+        }).catch(e=>{
+          this.$alert(` ${this.$route.params.album } 暂不可用`)
+          this.loadingInstance.close();
+        });
     },
-    showAlbum(album) {
-      if (!this.album) {
+    showImg(img) {
         console.debug("开始请求");
-        this.title = album.name;
 
-        this.album = album.name;
-        console.log("获取相册的内容");
+        const h = this.$createElement;
+        // this.$msgbox({
+        //   title: "消息",
+        //   message: h("img", { src: img.download_url,alt:'测试' })
+        // });
 
-        this.$router.push(`/${album.name}`);
-      }
+        this.$alert(`<img src="${img.download_url}" style="width:100%"/>`, img.name, {
+          dangerouslyUseHTMLString: true
+        })
+
+        // this.getImages();
     }
   }
 };
