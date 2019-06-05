@@ -12,25 +12,8 @@
         <router-link :to="cell.name">
           <el-card :style="{cursor:album?'auto':'pointer'}">
             <InkImg :src="getImgUrl(cell)" style="height:160px"></InkImg>
-            <!-- <div class="img-container" style>
-            <img
-              :src="cell.download_url || getImgUrl(cell.name+'/'+cell.name+'01.jpg')"
-              alt="图片挂了"
-              style="max-width:260px"
-              @error="imgError"
-            >
-            </div>-->
-            <!-- <el-image
-            :src="cell.download_url || getImgUrl(cell.name+'/'+cell.name+'01.jpg')"
-            style="width:100px;height:100px"
-            fit="contain"
-          >
-            <div slot="error" class="image-slot">
-              <i class="el-icon-picture-outline"></i>
-            </div>
-            </el-image>-->
-            <div style="padding: 14px;" class="text-ellipsis">
-              <span>{{cell.name}}</span>
+            <div style="padding: 5px;" class="text-ellipsis">
+              <span :title="cell.name">{{cell.name}}</span>
             </div>
           </el-card>
         </router-link>
@@ -118,7 +101,10 @@ export default {
 #covers-container {
   margin: 15px auto;
   width: 80%;
-
+  a {
+    outline: none;
+    text-decoration: none;
+  }
   .el-row {
     margin: 15px;
   }
