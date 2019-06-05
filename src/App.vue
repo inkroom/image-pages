@@ -34,6 +34,10 @@ body {
   background-color: #3b4048 !important;
 }
 
+.el-loading-mask{
+  background-color: #3b4048 !important;
+}
+
 .text-ellipsis {
   overflow: hidden;
   text-overflow: ellipsis;

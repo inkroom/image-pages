@@ -3,7 +3,7 @@
     <el-row v-for="(row,i) in covers" :key="i" :gutter="20">
       <el-col v-for="(cell,j) in row" :key="j" :span="limit.span">
         <el-card :style="{cursor:album?'auto':'pointer'}" @click.native="showImg(cell)">
-          <InkImg :src="cell.download_url" style="height:160px" :imgStyle="style"></InkImg>
+          <InkImg :src="cell.download_url" style="height:160px;line-height:160px" :imgStyle="{maxWidth:'100%',verticalAlign:'middle'}"></InkImg>
           <div style="padding: 5px;" class="text-ellipsis">
             <span :title="cell.name">{{cell.name}}</span>
           </div>
@@ -50,15 +50,6 @@ export default {
     title(nv) {
       document.title = nv;
     },
-    loading(nv, ov) {
-      if (nv) {
-        this.loadingInstance = Loading.service({
-          text: "正在努力加载中..."
-        });
-      } else {
-        this.loadingInstance.close();
-      }
-    }
   },
   created() {
     document.title = this.$route.params.album;

@@ -4,7 +4,7 @@
       <el-col v-for="(cell,j) in row" :key="j" :span="limit.span">
         <router-link :to="cell.name">
           <el-card :style="{cursor:album?'auto':'pointer'}">
-            <InkImg :src="getImgUrl(cell)" style="height:160px" :imgStyle="style"></InkImg>
+            <InkImg :src="getImgUrl(cell)" style="height:160px;line-height:160px;" :imgStyle="{maxWidth:'100%',verticalAlign:'middle'}"></InkImg>
             <div style="padding: 5px;" class="text-ellipsis">
               <span :title="cell.name">{{cell.name}}</span>
             </div>
@@ -24,7 +24,6 @@ export default {
   components: { InkImg },
   data() {
     return {
-      style:'max-width:260px',
       limit: {
         col: 6, //每行最多6个,最好能和24整除
         span: 4
