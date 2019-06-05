@@ -1,12 +1,5 @@
 <template>
   <div id="covers-container">
-    <!--  <div class="block" v-for="fit in fits" :key="fit">
-    <span class="demonstration">{{ fit }}</span>
-    <el-image
-      style="width: 100px; height: 100px"
-      :src="url"
-      :fit="fit"></el-image>
-    </div>-->
     <el-row v-for="(row,i) in covers" :key="i" :gutter="20">
       <el-col v-for="(cell,j) in row" :key="j" :span="limit.span">
         <router-link :to="cell.name">

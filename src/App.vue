@@ -18,6 +18,8 @@ export default {
   text-align: center;
   color: #3b414a;
   margin-top: 60px;
+  background-color: #3b4048;
+  height: 100%;
 }
 
 * {
@@ -26,9 +28,10 @@ export default {
 }
 html,
 body {
-  width: 100%;
-  height: 100%;
-  background-color: #3b4048;
+  /* 总有莫名其妙的css被打包进去 */
+  width: 100% !important;
+  height: 100% !important;
+  background-color: #3b4048 !important;
 }
 
 .text-ellipsis {

@@ -1,33 +1,9 @@
 <template>
   <div id="covers-container">
-    <!--  <div class="block" v-for="fit in fits" :key="fit">
-    <span class="demonstration">{{ fit }}</span>
-    <el-image
-      style="width: 100px; height: 100px"
-      :src="url"
-      :fit="fit"></el-image>
-    </div>-->
     <el-row v-for="(row,i) in covers" :key="i" :gutter="20">
       <el-col v-for="(cell,j) in row" :key="j" :span="limit.span">
         <el-card :style="{cursor:album?'auto':'pointer'}" @click.native="showImg(cell)">
           <InkImg :src="cell.download_url" style="height:160px"></InkImg>
-          <!-- <div class="img-container" style>
-            <img
-              :src="cell.download_url || getImgUrl(cell.name+'/'+cell.name+'01.jpg')"
-              alt="图片挂了"
-              style="max-width:260px"
-              @error="imgError"
-            >
-          </div>-->
-          <!-- <el-image
-            :src="cell.download_url || getImgUrl(cell.name+'/'+cell.name+'01.jpg')"
-            style="width:100px;height:100px"
-            fit="contain"
-          >
-            <div slot="error" class="image-slot">
-              <i class="el-icon-picture-outline"></i>
-            </div>
-          </el-image>-->
           <div style="padding: 5px;" class="text-ellipsis">
             <span :title="cell.name">{{cell.name}}</span>
           </div>
@@ -88,22 +64,6 @@ export default {
       this.loadingInstance = Loading.service({
         text: "正在努力加载中..."
       });
-
-      //获取封面
-
-      // if (this.album) {
-      //   promise = axios.get(
-      //     `https://api.github.com/repos/${process.env.AUTHOR}/${
-      //       process.env.REPO
-      //     }/contents/${this.album}`
-      //   );
-      // } else {
-      //   promise = axios.get(
-      //     `https://api.github.com/repos/${process.env.AUTHOR}/${
-      //       process.env.REPO
-      //     }/contents/`
-      //   );
-      // }
       axios
         .get(
           `https://api.github.com/repos/${process.env.AUTHOR}/${
