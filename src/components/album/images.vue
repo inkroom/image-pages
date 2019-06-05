@@ -13,7 +13,7 @@
 
     <el-dialog :visible.sync="dialog.visible" width="30%" :show-close="false" :lock-scroll="false">
       <div v-if="dialog.visible">
-        <InkImg :src="dialog.album.download_url" :loading="false" :imgStyle="{width:'100%'}"></InkImg>
+        <InkImg :src="dialog.album.download_url"  :imgStyle="{width:'100%'}"></InkImg>
         <div style="padding: 5px;" class="text-ellipsis">
           <span :title="dialog.album.name">{{dialog.album.name}}</span>
         </div>
