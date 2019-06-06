@@ -12,3 +12,8 @@
 图片收藏仓库地址
 
 [https://github.com/inkroom/image](https://github.com/inkroom/image)
+
+--- 
+web浏览地址
+
+[https://inkroom.github.io/image-pages/index.html](https://inkroom.github.io/image-pages/index.html)

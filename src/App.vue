@@ -1,6 +1,8 @@
 <template>
   <div id="app">
     <router-view/>
+
+    <div>@copyright 墨盒</div>
   </div>
 </template>
 
@@ -12,7 +14,7 @@ export default {
 
 <style lang="scss">
 #covers-container {
-  margin: 15px auto;
+  margin:  auto;
   width: 80%;
 
   .el-col {
@@ -21,12 +23,10 @@ export default {
 }
 
 #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   /* text-align: center; */
   color: #3b414a;
-  margin-top: 60px;
   background-color: #3b4048;
   height: 100%;
 }
