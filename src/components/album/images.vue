@@ -1,5 +1,11 @@
 <template>
   <div id="covers-container">
+    <el-backtop target=".page-component__scroll .el-scrollbar__wrap"></el-backtop>
+    <div>共 {{ covers.length }} 张
+
+      <el-link :href="url.upload" target="_blank" type="primary" style="font-size:20px">上传图片</el-link>
+
+    </div>
     <el-row :gutter="20">
       <el-col v-for="(cell,j) in covers" :key="j" :xs="24" :sm="12" :md="6" :lg="4" :xl="3">
         <el-card :style="{cursor:album?'auto':'pointer'}" @click.native="showImg(cell)">
@@ -33,6 +39,7 @@
             :title="dialog.album.name"
           >{{dialog.album.name}}</el-link>
           - {{ dialog.album.size |size }}
+          <el-link :href="getDeleteUrl(dialog.album)" target="_blank" type="danger">删除</el-link>
         </div>
       </div>
     </el-dialog>
@@ -53,6 +60,9 @@ export default {
       limit: {
         col: 6, //每行最多6个,最好能和24整除
         span: 4
+      },
+      url:{
+        upload:`https://github.com/${process.env.AUTHOR}/${process.env.REPO}/upload/master/${this.$route.params.album}`
       },
       covers: [],
       title: "墨盒的相册",
@@ -81,6 +91,11 @@ export default {
     this.getImages();
   },
   methods: {
+    getDeleteUrl(img) {
+      return `https://github.com/${process.env.AUTHOR}/${
+        process.env.REPO
+      }/delete/${process.env.BRANCH}/${img.path}`;
+    },
     getImgUrl(path) {
       return `https://raw.githubusercontent.com/${process.env.AUTHOR}/${
         process.env.REPO

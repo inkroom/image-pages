@@ -2,7 +2,7 @@
   <div id="app">
     <router-view/>
 
-    <div>@copyright 墨盒</div>
+    <div style="text-align:center;margin:15px;">@copyright 墨盒</div>
   </div>
 </template>
 
@@ -14,11 +14,13 @@ export default {
 
 <style lang="scss">
 #covers-container {
-  margin:  auto;
-  width: 80%;
+  $margin-size: 15px;
 
+  margin: auto;
+  width: 80%;
+  padding-top: $margin-size;
   .el-col {
-    margin-top: 15px;
+    margin-bottom: $margin-size;
   }
 }
 
@@ -26,7 +28,6 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   /* text-align: center; */
-  color: #3b414a;
   background-color: #3b4048;
   height: 100%;
 }
@@ -43,7 +44,7 @@ body {
   background-color: #3b4048 !important;
 }
 
-.el-loading-mask{
+.el-loading-mask {
   background-color: #3b4048 !important;
 }
 
