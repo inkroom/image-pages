@@ -7,6 +7,7 @@
       <i class="el-icon-picture-outline"></i>
     </div>
     <img
+      v-if="loadable"
       :src="src"
       :style="imgStyle"
       @error="status='error'"
@@ -16,11 +17,18 @@
   </div>
 </template>
 <script>
+function lazyLoad() {}
+
 export default {
   name: "InkImg",
   props: {
     src: String,
-    imgStyle: String,
+    imgStyle: Object,
+    lazy: {
+      //是否开启懒加载
+      type: Boolean,
+      default: false
+    },
     loading: {
       type: Boolean,
       default: true
@@ -33,8 +41,38 @@ export default {
   },
   data() {
     return {
-      status: "loading"
+      status: "loading",
+      startLoad: false
     };
+  },
+  computed: {
+    loadable() {
+      if (this.lazy) return this.startLoad;
+      return true;
+    }
+  },
+  mounted() {
+    if (this.lazy) {
+      document.addEventListener("scroll", this.lazyLoad);
+      this.lazyLoad();
+    }
+  },
+  destroyed() {
+    if (this.lazy) {
+      document.removeEventListener("scroll", this.lazyLoad);
+    }
+  },
+  methods: {
+    lazyLoad() {
+      var t =
+        document.documentElement.clientHeight +
+        (document.body.scrollTop || document.documentElement.scrollTop);
+
+      if (this.$el.offsetTop < t) {
+        this.startLoad = true;
+        document.removeEventListener("scroll", this.lazyLoad);
+      }
+    }
   }
 };
 </script>

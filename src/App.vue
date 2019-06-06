@@ -10,7 +10,16 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
+#covers-container {
+  margin: 15px auto;
+  width: 80%;
+
+  .el-col {
+    margin-top: 15px;
+  }
+}
+
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
