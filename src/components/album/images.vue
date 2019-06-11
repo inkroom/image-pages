@@ -32,10 +32,10 @@
       <div v-if="dialog.visible" style="position:relative">
         <i
           @click="prev"
-          v-if="dialog.index!=0"
+          v-if="dialog.status =='normal' && dialog.index!=0"
           class="el-icon-arrow-left order-i"
         ></i>
-        <InkImg :src="dialog.album.download_url" :imgStyle="{width:'100%'}"></InkImg>
+        <InkImg :src="dialog.album.download_url" :imgStyle="{width:'100%'}" :s.sync="dialog.status"></InkImg>
         <div style="padding: 5px;" class="text-ellipsis">
           <el-link
             :href="dialog.album._links.html"
@@ -48,7 +48,7 @@
         </div>
         <i
           @click="next"
-          v-if="dialog.index!=covers.length-1"
+          v-if="dialog.status =='normal' && dialog.index!=covers.length-1"
           class="el-icon-arrow-right order-i"
         ></i>
       </div>
@@ -85,7 +85,8 @@ export default {
       dialog: {
         visible: false,
         album: null,
-        index: -1
+        index: -1,
+        status:'loading'
       }
     };
   },

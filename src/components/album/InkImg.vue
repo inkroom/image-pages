@@ -32,12 +32,20 @@ export default {
     loading: {
       type: Boolean,
       default: true
-    }
+    },
+    s: String
   },
   watch: {
     src(nv) {
       this.status = "loading";
+    },
+    status(nv) {
+      this.$emit("update:s", nv);
+
     }
+  },
+  created(){
+     this.$emit("update:s", this.status);
   },
   data() {
     return {
