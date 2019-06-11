@@ -175,7 +175,7 @@ export default {
 <style lang="scss">
 .order-i {
   position: absolute;
-  top: 50%;
+  top: 40%;
   font-size: 30px;
   border: 1px solid;
   border-radius: 50%;
