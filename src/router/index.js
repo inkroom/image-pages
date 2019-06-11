@@ -27,17 +27,18 @@ const router = new Router({
 
 })
 
-// let loading = null;
+let loading = null;
 
-// router.beforeEach((to, from, next) => {
-//   loading = Loading.service({
-//     text: "正在努力加载中..."
-//   });
-//   next();
-// })
+router.beforeEach((to, from, next) => {
+  console.log('开始router loading')
+  loading = Loading.service({
+    text: "正在努力加载中..."
+  });
+  next();
+})
 
-// router.afterEach((to, from) => {
-//   loading.close();
-// })
+router.afterEach((to, from) => {
+  loading.close();
+})
 
 export default router;

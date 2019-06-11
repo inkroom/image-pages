@@ -1,14 +1,14 @@
 <template>
   <div id="covers-container">
     <el-backtop target=".page-component__scroll .el-scrollbar__wrap"></el-backtop>
-    <div>共 {{ covers.length }} 张
-
+    <div>
+      共 {{ covers.length }} 张
+      <router-link to="/" style="font-size:20px;" class="el-link el-link--primary is-underline">首页</router-link>
       <el-link :href="url.upload" target="_blank" type="primary" style="font-size:20px">上传图片</el-link>
-
     </div>
     <el-row :gutter="20">
       <el-col v-for="(cell,j) in covers" :key="j" :xs="24" :sm="12" :md="6" :lg="4" :xl="3">
-        <el-card :style="{cursor:album?'auto':'pointer'}" @click.native="showImg(cell)">
+        <el-card :style="{cursor:album?'auto':'pointer'}" @click.native="showImg(j)">
           <InkImg
             :src="cell.download_url"
             style="height:160px;line-height:160px"
@@ -29,7 +29,12 @@
       :lock-scroll="false"
       :fullscreen="ismobile"
     >
-      <div v-if="dialog.visible">
+      <div v-if="dialog.visible" style="position:relative">
+        <i
+          @click="prev"
+          v-if="dialog.index!=0"
+          class="el-icon-arrow-left order-i"
+        ></i>
         <InkImg :src="dialog.album.download_url" :imgStyle="{width:'100%'}"></InkImg>
         <div style="padding: 5px;" class="text-ellipsis">
           <el-link
@@ -41,6 +46,11 @@
           - {{ dialog.album.size |size }}
           <el-link :href="getDeleteUrl(dialog.album)" target="_blank" type="danger">删除</el-link>
         </div>
+        <i
+          @click="next"
+          v-if="dialog.index!=covers.length-1"
+          class="el-icon-arrow-right order-i"
+        ></i>
       </div>
     </el-dialog>
   </div>
@@ -61,8 +71,10 @@ export default {
         col: 6, //每行最多6个,最好能和24整除
         span: 4
       },
-      url:{
-        upload:`https://github.com/${process.env.AUTHOR}/${process.env.REPO}/upload/master/${this.$route.params.album}`
+      url: {
+        upload: `https://github.com/${process.env.AUTHOR}/${
+          process.env.REPO
+        }/upload/master/${this.$route.params.album}`
       },
       covers: [],
       title: "墨盒的相册",
@@ -72,7 +84,8 @@ export default {
       ),
       dialog: {
         visible: false,
-        album: null
+        album: null,
+        index: -1
       }
     };
   },
@@ -85,6 +98,9 @@ export default {
     title(nv) {
       document.title = nv;
     }
+  },
+  destroyed() {
+    window.removeEventListener("popstate", this.popstate);
   },
   created() {
     document.title = this.$route.params.album;
@@ -116,18 +132,6 @@ export default {
         )
         .then(res => {
           res = res.data;
-          // this.covers = [];
-          // for (let i = 0; i < Math.floor(res.length / this.limit.col); i++) {
-          //   let row = [];
-          //   for (
-          //     let j = i * this.limit.col;
-          //     j < (i + 1) * this.limit.col;
-          //     j++
-          //   ) {
-          //     row.push(res[j]);
-          //   }
-          //   this.covers.push(row);
-          // }
           this.covers = res;
           this.loadingInstance.close();
         })
@@ -136,24 +140,48 @@ export default {
           this.loadingInstance.close();
         });
     },
-    showImg(img) {
-      console.debug("开始请求");
+    popstate() {
+      history.pushState(null, null, document.URL);
+      this.dialog.visible = false;
 
-      const h = this.$createElement;
-      // this.$msgbox({
-      //   title: "消息",
-      //   message: h("img", { src: img.download_url,alt:'测试' })
-      // });
+      window.removeEventListener("popstate", this.popstate);
 
-      this.dialog.album = img;
+      return false;
+    },
+    showImg(index) {
+      window.addEventListener("popstate", this.popstate);
+      this.dialog.index = index;
+      this.dialog.album = this.covers[index];
       this.dialog.visible = true;
-
-      // this.$alert(`<img src="${img.download_url}" style="width:100%"/>`, img.name, {
-      //   dangerouslyUseHTMLString: true
-      // })
-
-      // this.getImages();
+    },
+    next() {
+      if (this.dialog.index != this.covers.length - 1) {
+        this.dialog.index++;
+        this.dialog.album = this.covers[this.dialog.index];
+        this.dialog.visible = true;
+      }
+    },
+    prev() {
+      if (this.dialog.index != 0) {
+        this.dialog.index--;
+        this.dialog.album = this.covers[this.dialog.index];
+        this.dialog.visible = true;
+      }
     }
   }
 };
 </script>
+<style lang="scss">
+.order-i {
+  position: absolute;
+  top: 50%;
+  font-size: 30px;
+  border: 1px solid;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.5);
+
+  &:last-of-type{
+    right: 0;
+  }
+}
+</style>
