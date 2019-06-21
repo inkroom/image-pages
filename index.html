@@ -10,7 +10,7 @@
 
 <body>
   <div id="app"></div>
-  <% if(htmlWebpackPlugin.options.env == 'production'){ %>
+  <% if(htmlWebpackPlugin.options.env.NODE_ENV == 'production'){ %>
   <script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
   <% } else { %>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
