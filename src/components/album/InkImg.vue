@@ -10,8 +10,8 @@
       v-if="loadable"
       :src="src"
       :style="imgStyle"
-      @error="status='error'"
-      @load="status='normal'"
+      @error="()=>{this.status='error';this.$emit('status',this.status);this.$emit('update:s',this.status)}"
+      @load="()=>{this.status='normal';this.$emit('status',this.status);this.$emit('update:s',this.status)}"
       v-show="!loading || status=='normal'"
     >
   </div>
@@ -30,6 +30,7 @@ export default {
       default: false
     },
     loading: {
+      //是否loading
       type: Boolean,
       default: true
     },
@@ -37,19 +38,21 @@ export default {
   },
   watch: {
     src(nv) {
-      this.status = "loading";
+      if (this.loading) this.status = "loading";
+      else
+      this.$emit("update:s", this.status);
     },
     status(nv) {
-      this.$emit("update:s", nv);
 
+      // this.$emit("update:s", nv);
     }
   },
-  created(){
-     this.$emit("update:s", this.status);
+  created() {
+    this.$emit("update:s", this.status);
   },
   data() {
     return {
-      status: "loading",
+      status: this.loading? "loading":"normal",
       startLoad: false
     };
   },

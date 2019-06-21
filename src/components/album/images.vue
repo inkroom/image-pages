@@ -13,6 +13,7 @@
             :src="cell.download_url"
             style="height:160px;line-height:160px"
             :imgStyle="{maxWidth:'100%',verticalAlign:'middle'}"
+            :s.sync="cell.status"
             lazy
           ></InkImg>
           <div style="padding: 5px;" class="text-ellipsis">
@@ -32,10 +33,10 @@
       <div v-if="dialog.visible" style="position:relative">
         <i
           @click="prev"
-          v-if="dialog.status =='normal' && dialog.index!=0"
+          v-show="dialog.album.status =='normal' && dialog.index!=0"
           class="el-icon-arrow-left order-i"
         ></i>
-        <InkImg :src="dialog.album.download_url" :imgStyle="{width:'100%'}" :s.sync="dialog.status"></InkImg>
+        <InkImg :src="dialog.album.download_url" :imgStyle="{width:'100%'}" :s.sync="dialog.album.status" :loading="dialog.album.status!='normal'"></InkImg>
         <div style="padding: 5px;" class="text-ellipsis">
           <el-link
             :href="dialog.album._links.html"
@@ -48,7 +49,7 @@
         </div>
         <i
           @click="next"
-          v-if="dialog.status =='normal' && dialog.index!=covers.length-1"
+          v-show="dialog.album.status =='normal' && dialog.index!=covers.length-1"
           class="el-icon-arrow-right order-i"
         ></i>
       </div>
@@ -86,7 +87,6 @@ export default {
         visible: false,
         album: null,
         index: -1,
-        status:'loading'
       }
     };
   },
