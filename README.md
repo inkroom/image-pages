@@ -16,4 +16,4 @@
 --- 
 web浏览地址
 
-[https://inkroom.github.io/image-pages/index.html](https://inkroom.github.io/image-pages/index.html)
+[http://image.inkroom.cn/](http://image.inkroom.cn/)
