@@ -29,7 +29,7 @@ export default {
         span: 4
       },
       covers: [],
-      title: "墨盒的相册",
+      title: "墨盒相册",
       album: null
     };
   },
@@ -39,7 +39,7 @@ export default {
     }
   },
   created() {
-    document.title = `墨盒的相册`;
+    document.title = `墨盒相册`;
     this.getImages();
   },
   methods: {
