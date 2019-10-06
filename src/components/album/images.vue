@@ -78,7 +78,7 @@ export default {
         }/upload/master/${this.$route.params.album}`
       },
       covers: [],
-      title: "墨盒的相册",
+      title: "墨盒相册",
       album: null,
       ismobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
         navigator.userAgent
@@ -97,7 +97,7 @@ export default {
   },
   watch: {
     title(nv) {
-      document.title = nv;
+      document.title = "墨盒相册 - "+ nv;
     }
   },
   destroyed() {
