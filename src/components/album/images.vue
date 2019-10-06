@@ -36,7 +36,12 @@
           v-show="dialog.album.status =='normal' && dialog.index!=0"
           class="el-icon-arrow-left order-i"
         ></i>
-        <InkImg :src="dialog.album.download_url" :imgStyle="{width:'100%'}" :s.sync="dialog.album.status" :loading="dialog.album.status!='normal'"></InkImg>
+        <InkImg
+          :src="dialog.album.download_url"
+          :imgStyle="{width:'100%'}"
+          :s.sync="dialog.album.status"
+          :loading="dialog.album.status!='normal'"
+        ></InkImg>
         <div style="padding: 5px;" class="text-ellipsis">
           <el-link
             :href="dialog.album._links.html"
@@ -73,9 +78,7 @@ export default {
         span: 4
       },
       url: {
-        upload: `https://github.com/${process.env.AUTHOR}/${
-          process.env.REPO
-        }/upload/master/${this.$route.params.album}`
+        upload: `https://github.com/${process.env.AUTHOR}/${process.env.REPO}/upload/master/${this.$route.params.album}`
       },
       covers: [],
       title: "墨盒相册",
@@ -86,7 +89,7 @@ export default {
       dialog: {
         visible: false,
         album: null,
-        index: -1,
+        index: -1
       }
     };
   },
@@ -97,26 +100,22 @@ export default {
   },
   watch: {
     title(nv) {
-      document.title = "墨盒相册 - "+ nv;
+      document.title = this.title + " - " + nv;
     }
   },
   destroyed() {
     window.removeEventListener("popstate", this.popstate);
   },
   created() {
-    document.title = this.$route.params.album;
+    document.title = `${this.title} - ${this.$route.params.album}`;
     this.getImages();
   },
   methods: {
     getDeleteUrl(img) {
-      return `https://github.com/${process.env.AUTHOR}/${
-        process.env.REPO
-      }/delete/${process.env.BRANCH}/${img.path}`;
+      return `https://github.com/${process.env.AUTHOR}/${process.env.REPO}/delete/${process.env.BRANCH}/${img.path}`;
     },
     getImgUrl(path) {
-      return `https://raw.githubusercontent.com/${process.env.AUTHOR}/${
-        process.env.REPO
-      }/${process.env.BRANCH}/${path}`;
+      return `https://raw.githubusercontent.com/${process.env.AUTHOR}/${process.env.REPO}/${process.env.BRANCH}/${path}`;
     },
     getImages() {
       console.log("发送githu");
@@ -127,9 +126,7 @@ export default {
       });
       axios
         .get(
-          `https://api.github.com/repos/${process.env.AUTHOR}/${
-            process.env.REPO
-          }/contents/${this.$route.params.album}`
+          `https://api.github.com/repos/${process.env.AUTHOR}/${process.env.REPO}/contents/${this.$route.params.album}`
         )
         .then(res => {
           res = res.data;
@@ -181,7 +178,7 @@ export default {
   border-radius: 50%;
   background-color: rgba(0, 0, 0, 0.5);
 
-  &:last-of-type{
+  &:last-of-type {
     right: 0;
   }
 }
