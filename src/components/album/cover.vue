@@ -29,17 +29,15 @@ export default {
         span: 4
       },
       covers: [],
-      title: "墨盒相册",
       album: null
     };
   },
-  watch: {
-    title(nv) {
-      document.title = nv;
-    }
-  },
+  // watch: {
+  //   title(nv) {
+  //     document.title = nv;
+  //   }
+  // },
   created() {
-    document.title = `墨盒相册`;
     this.getImages();
   },
   methods: {
