@@ -2,7 +2,7 @@
   <div id="app">
     <router-view/>
 
-    <div style="text-align:center;margin:15px;">@copyright 墨盒</div>
+    <div style="text-align:center;margin:15px;">蜀ICP备17000680号  @copyright 墨盒</div>
   </div>
 </template>
 
