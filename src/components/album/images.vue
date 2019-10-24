@@ -81,7 +81,7 @@ export default {
         upload: `https://github.com/${process.env.AUTHOR}/${process.env.REPO}/upload/master/${this.$route.params.album}`
       },
       covers: [],
-      title: "墨盒相册",
+      title: "墨明棋妙",
       album: null,
       ismobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
         navigator.userAgent
