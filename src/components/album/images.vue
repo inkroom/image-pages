@@ -16,7 +16,7 @@
             :s.sync="cell.status"
             lazy
           ></InkImg>
-          <div style="padding: 5px;" class="text-ellipsis">
+          <div style="padding: 5px;" class="text-ellipsis name">
             <span :title="cell.name">{{cell.name}}</span>
           </div>
         </el-card>

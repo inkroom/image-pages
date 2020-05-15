@@ -5,7 +5,7 @@
         <router-link :to="cell.name">
           <el-card :style="{cursor:album?'auto':'pointer'}">
             <InkImg :src="getImgUrl(cell)" style="height:160px;line-height:160px;" :imgStyle="{maxWidth:'100%',verticalAlign:'middle'}"></InkImg>
-            <div style="padding: 5px;" class="text-ellipsis">
+            <div style="padding: 5px;" class="text-ellipsis name">
               <span :title="cell.name">{{cell.name}}</span>
             </div>
           </el-card>

@@ -30,6 +30,9 @@ export default {
   /* text-align: center; */
   background-color: #3b4048;
   height: 100%;
+  .name{
+    line-height: 20px;
+  }
 }
 
 * {
