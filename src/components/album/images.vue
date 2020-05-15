@@ -4,7 +4,7 @@
     <div >
       <span style="vertical-align:bottom;font-size:20px;">共 {{ covers.length }} 张</span>
       
-      <router-link to="/" style="font-size:20px;" class="el-link el-link--primary is-underline">首页</router-link>
+      <el-link @click.native="home" style="font-size:20px;" class="el-link el-link--primary is-underline" >首页</el-link>
       <el-link :href="url.upload" target="_blank" type="primary" style="font-size:20px">上传图片</el-link>
     </div>
     <el-row :gutter="20">
@@ -112,6 +112,10 @@ export default {
     this.getImages();
   },
   methods: {
+    home(){
+      this.$store.commit('loading',true);
+      this.$router.push('/')
+    },
     getDeleteUrl(img) {
       return `https://github.com/${process.env.AUTHOR}/${process.env.REPO}/delete/${process.env.BRANCH}/${img.path}`;
     },
