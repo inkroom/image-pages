@@ -38,6 +38,7 @@ export default {
   //   }
   // },
   created() {
+    document.title = '墨明棋妙';
     this.getImages();
   },
   methods: {
