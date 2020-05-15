@@ -1,8 +1,9 @@
 <template>
-  <div id="covers-container">
-    <el-backtop target=".page-component__scroll .el-scrollbar__wrap"></el-backtop>
-    <div>
-      共 {{ covers.length }} 张
+  <div id="covers-container" v-if="!$store.state.loading">
+    <!-- <el-backtop target=".page-component__scroll .el-scrollbar__wrap"></el-backtop> -->
+    <div >
+      <span style="vertical-align:bottom;font-size:20px;">共 {{ covers.length }} 张</span>
+      
       <router-link to="/" style="font-size:20px;" class="el-link el-link--primary is-underline">首页</router-link>
       <el-link :href="url.upload" target="_blank" type="primary" style="font-size:20px">上传图片</el-link>
     </div>
@@ -121,9 +122,9 @@ export default {
       console.log("发送githu");
       let promise = null;
 
-      this.loadingInstance = Loading.service({
-        text: "正在努力加载中..."
-      });
+      // this.loadingInstance = Loading.service({
+      //   text: "正在努力加载中..."
+      // });
       axios
         .get(
           `https://api.github.com/repos/${process.env.AUTHOR}/${process.env.REPO}/contents/${this.$route.params.album}`
@@ -131,11 +132,13 @@ export default {
         .then(res => {
           res = res.data;
           this.covers = res;
-          this.loadingInstance.close();
         })
         .catch(e => {
           this.$alert(` ${this.$route.params.album} 暂不可用`);
-          this.loadingInstance.close();
+         
+        }).finally(_=>{
+          //  this.loadingInstance.close();
+          this.$store.commit('loading',false)
         });
     },
     popstate() {

@@ -31,14 +31,14 @@ let loading = null;
 
 router.beforeEach((to, from, next) => {
   console.log('开始router loading')
-  loading = Loading.service({
-    text: "正在努力加载中..."
-  });
+  // loading = Loading.service({
+  //   text: "router 正在努力加载中..."
+  // });
   next();
 })
 
 router.afterEach((to, from) => {
-  loading.close();
+  // loading.close();
 })
 
 export default router;

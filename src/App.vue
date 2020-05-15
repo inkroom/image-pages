@@ -2,13 +2,29 @@
   <div id="app">
     <router-view/>
 
-    <div style="text-align:center;margin:15px;">蜀ICP备17000680号  @copyright 墨盒</div>
+    <div style="text-align:center;margin:15px;" v-if="!$store.state.loading">蜀ICP备17000680号  @copyright 墨盒</div>
   </div>
 </template>
 
 <script>
+import { Loading } from "element-ui";
 export default {
-  name: "App"
+  name: "App",
+  watch:{
+    "$store.loading"(nv,ov){
+      if(nv){//开始loading
+
+        console.log('开始loading--wacht')
+        // this.loadingInstance = Loading.service({
+        //   text: "正在努力加载中..."
+        // });
+
+      }else{//关闭loading
+      console.log('关闭loading--watch')
+        // this.loadingInstance &&  this.loadingInstance.close();
+      }
+    }
+  }
 };
 </script>
 
