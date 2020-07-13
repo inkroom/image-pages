@@ -1,8 +1,10 @@
 package cn.inkroom.image.download;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
@@ -44,10 +46,6 @@ public class DownloadThread extends Thread {
 
         for (int i = 0; i < urls.size(); i++) {
 
-            if (urls.get(i).equals("1600X800/1506588475343 - 1600x900.jpg")){
-                logger.info("开始");
-            }
-
             //保存位置
             File saveFile = new File(this.target, urls.get(i));
             if (!saveFile.getParentFile().exists() && !saveFile.getParentFile().mkdirs()) {
@@ -63,12 +61,21 @@ public class DownloadThread extends Thread {
 
                 HttpResponse response = client.execute(get);
 
+
+
+                HttpEntity entity = response.getEntity();
+
                 if (response.getStatusLine().getStatusCode() == 200) {
                     //保存
-                    IOUtils.write(EntityUtils.toByteArray(response.getEntity()), out);
+                    IOUtils.write(EntityUtils.toByteArray(entity), out);
                 }
+
+                if (response instanceof CloseableHttpResponse){//关闭，以释放连接到连接池
+                    ((CloseableHttpResponse) response).close();
+                }
+
             } catch (Exception e) {
-                logger.error("[下载失败]-{}", urls.get(i));
+                logger.error("[下载失败]-{}-{}", urls.get(i), e.getMessage());
             }
         }
         logger.info("下载了{}个文件", urls.size());
