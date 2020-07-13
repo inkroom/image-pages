@@ -20,7 +20,7 @@ public class Tool {
 
         Logger logger = LoggerFactory.getLogger("下载工具");
 
-        int eachThreadCount = 100;//每个线程负责下载的最大文件数
+        int eachThreadCount = 300;//每个线程负责下载的最大文件数
 // 文件保存目录
         File target = new File("/Users/apple/resources/image");
         //避开api请求频率限制，单位毫秒,https://developer.github.com/v3/#rate-limiting
@@ -28,7 +28,7 @@ public class Tool {
 //        创建下载客户端
 
         HttpClient client = HttpClients.custom()
-                .setDefaultRequestConfig(RequestConfig.custom().setConnectTimeout(3000).setSocketTimeout(6000).setSocketTimeout(60000).build())
+                .setDefaultRequestConfig(RequestConfig.custom().setConnectTimeout(3000).setConnectionRequestTimeout(3000).setSocketTimeout(6000).setSocketTimeout(60000).build())
                 .setDefaultSocketConfig(SocketConfig.custom().setSoTimeout(60000).build()).build();
 
 //        获取文件目录
