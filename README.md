@@ -1,19 +1,11 @@
-# image-pages
-个人图片收藏之web端
 
----
-这是一个基于github pages的相册网站
-主要用途是给我的图片收藏仓库提供一个web浏览界面
-
-毕竟github自身的浏览功能实在是不太好用，，，尤其是对于图片
+用于从 [个人相册](https://github.com/inkroom/image) 上下载图片的工具
 
 
---- 
-图片收藏仓库地址
+由于对应的 [git仓库](https://github.com/inkroom/image) 体积过大，使用git下载不划算，因此使用工具直接下载
 
-[https://github.com/inkroom/image](https://github.com/inkroom/image)
+## 条件
+需要能访问 https://api.github.com/ 和 https://raw.githubusercontent.com/ 两个域名
 
---- 
-web浏览地址
+## 使用方法
 
-[http://image.inkroom.cn/](http://image.inkroom.cn/)
