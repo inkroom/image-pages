@@ -1,5 +1,9 @@
 package cn.inkroom.image.download;
 
+import okhttp3.Call;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -25,7 +29,7 @@ public class DownloadThread extends Thread {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
     private CountDownLatch latch;//用于通信
-    private HttpClient client;
+    private OkHttpClient client;
 
     private List<String> urls;
     /**
@@ -33,7 +37,7 @@ public class DownloadThread extends Thread {
      */
     private File target;
 
-    public DownloadThread(HttpClient client, List<String> urls, File target, CountDownLatch latch) {
+    public DownloadThread(OkHttpClient client, List<String> urls, File target, CountDownLatch latch) {
         this.client = client;
         this.urls = urls;
         this.target = target;
@@ -57,23 +61,20 @@ public class DownloadThread extends Thread {
             if (saveFile.exists() && saveFile.length() != 0) continue;
 
             try (FileOutputStream out = new FileOutputStream(saveFile)) {
-                HttpGet get = new HttpGet("https://raw.githubusercontent.com/inkroom/image/master/" + URLEncoder.encode(urls.get(i), Charset.defaultCharset()));
 
-                HttpResponse response = client.execute(get);
+                Request request = new Request.Builder().url("https://raw.githubusercontent.com/inkroom/image/master/" + URLEncoder.encode(urls.get(i), Charset.defaultCharset())).get().build();
 
+                Call call = client.newCall(request);
 
+                Response response = call.execute();
 
-                HttpEntity entity = response.getEntity();
-
-                if (response.getStatusLine().getStatusCode() == 200) {
+                if (response.code() == 200) {
                     //保存
-                    IOUtils.write(EntityUtils.toByteArray(entity), out);
+                    IOUtils.write(response.body().bytes(), out);
                 }
 
-                if (response instanceof CloseableHttpResponse){//关闭，以释放连接到连接池
-                    ((CloseableHttpResponse) response).close();
-                }
 
+                response.close();
             } catch (Exception e) {
                 logger.error("[下载失败]-{}-{}", urls.get(i), e.getMessage());
             }

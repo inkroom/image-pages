@@ -4,6 +4,10 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import okhttp3.Call;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -21,10 +25,10 @@ public class Info {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
 
-    private HttpClient client;
+    private OkHttpClient client;
 
 
-    public Info(HttpClient client) {
+    public Info(OkHttpClient client) {
         this.client = client;
     }
 
@@ -40,12 +44,17 @@ public class Info {
 
         try {
 
-            HttpResponse response = client.execute(rootGet);
+            Request request = new Request.Builder().url("https://api.github.com/repos/inkroom/image/contents").get().build();
 
-            if (response.getStatusLine().getStatusCode() == 200) {
 
-                String res = EntityUtils.toString(response.getEntity());
-                JsonArray jsonArray = new JsonParser().parse(res).getAsJsonArray();
+            Call call = client.newCall(request);
+
+            Response response = call.execute();
+
+
+            if (response.code() == 200) {
+
+                JsonArray jsonArray = new JsonParser().parse(response.body().string()).getAsJsonArray();
 
                 List<String> list = new LinkedList<>();
 
@@ -56,11 +65,13 @@ public class Info {
                     }
                 });
 
+                response.close();
                 return list;
 
             } else {
-                logger.error("[仓库信息] - 获取顶级目录失败，状态码：「{}」，返回数据：{}",  response.getStatusLine().getStatusCode(), EntityUtils.toString(response.getEntity()));
+                logger.error("[仓库信息] - 获取顶级目录失败，状态码：「{}」，返回数据：{}", response.code(), response.body().string());
             }
+            response.close();
         } catch (Exception e) {
             throw new RuntimeException("获取文件夹目录失败", e);
         }
@@ -72,13 +83,18 @@ public class Info {
     public List<String> getFiles(String dir) {
         HttpGet rootGet = new HttpGet("https://api.github.com/repos/inkroom/image/contents/" + dir);
         try {
+
+            Request request = new Request.Builder().url("https://api.github.com/repos/inkroom/image/contents/" + dir).get().build();
+
+            Call call = client.newCall(request);
+
+
+            Response response = call.execute();
             logger.info("[仓库信息] - 开始获取 {} 下的文件", dir);
-            HttpResponse response = client.execute(rootGet);
 
-            if (response.getStatusLine().getStatusCode() == 200) {
+            if (response.code() == 200) {
 
-                String res = EntityUtils.toString(response.getEntity());
-                JsonArray jsonArray = new JsonParser().parse(res).getAsJsonArray();
+                JsonArray jsonArray = new JsonParser().parse(response.body().string()).getAsJsonArray();
 
                 List<String> list = new LinkedList<>();
 
@@ -92,7 +108,7 @@ public class Info {
                 return list;
 
             } else {
-                logger.error("[仓库信息] - 获取「{}」下的文件失败，状态码：「{}」，返回数据：{}", dir, response.getStatusLine().getStatusCode(), EntityUtils.toString(response.getEntity()));
+                logger.error("[仓库信息] - 获取「{}」下的文件失败，状态码：「{}」，返回数据：{}", dir, response.code(), response.body().string());
             }
         } catch (Exception e) {
             throw new RuntimeException("获取文件失败", e);
