@@ -34,8 +34,9 @@ public class Tool {
                     @NotNull
                     @Override
                     public Response intercept(@NotNull Chain chain) throws IOException {
+                        Request authorization = chain.request().newBuilder().header("Authorization", "Basic 账号密码").build();
 
-                        return chain.proceed(chain.request());
+                        return chain.proceed(authorization);
                     }
                 }).build();
         return client;
@@ -50,30 +51,9 @@ public class Tool {
         File target = new File("/Users/apple/resources/image");
         //避开api请求频率限制，单位毫秒,https://developer.github.com/v3/#rate-limiting
 
-//        创建下载客户端
-
-//        HttpClient client = HttpClients.custom()
-//                .setDefaultHeaders(Collections.singleton(new BasicHeader("Authorization", "Basic MjQ1OTAwOTg2QHFxLmNvbTp2VllWNXhqdXlIbTJ6Q2Y=")))
-//                .setDefaultRequestConfig(RequestConfig.custom().setConnectTimeout(3000).setConnectionRequestTimeout(3000).setSocketTimeout(6000).setSocketTimeout(60000).build())
-//                .setDefaultSocketConfig(SocketConfig.custom().setSoTimeout(60000).build()).build();
-
-        OkHttpClient client = new OkHttpClient.Builder()
-                .callTimeout(Duration.ofMinutes(1))
-                .connectTimeout(Duration.ofMinutes(1))
-                .readTimeout(Duration.ofMinutes(1))
-                .writeTimeout(Duration.ofMinutes(1))
-                .addInterceptor(new Interceptor() {
-                    @NotNull
-                    @Override
-                    public Response intercept(@NotNull Chain chain) throws IOException {
-
-                        return chain.proceed(chain.request());
-                    }
-                }).build();
-
 //        获取文件目录
 
-        Info info = new Info(client);
+        Info info = new Info(client());
 
         List<String> rootDirs = info.getRootDirs();
 
