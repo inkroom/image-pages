@@ -49,9 +49,10 @@
             target="_blank"
             type="primary"
             :title="dialog.album.name"
+            style="vertical-align:top"
           >{{dialog.album.name}}</el-link>
           - {{ dialog.album.size |size }}
-          <el-link :href="getDeleteUrl(dialog.album)" target="_blank" type="danger">删除</el-link>
+          <el-link :href="getDeleteUrl(dialog.album)" target="_blank" type="danger" style="vertical-align:top">删除</el-link>
         </div>
         <i
           @click="next"
@@ -64,8 +65,6 @@
 </template>
 <script>
 import InkImg from "./InkImg";
-
-import { Loading } from "element-ui";
 
 import axios from "axios";
 

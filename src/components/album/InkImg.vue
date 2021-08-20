@@ -17,7 +17,6 @@
   </div>
 </template>
 <script>
-function lazyLoad() {}
 
 export default {
   name: "InkImg",
