@@ -44,15 +44,16 @@
           :loading="dialog.album.status!='normal'"
         ></InkImg>
         <div style="padding: 5px;" class="text-ellipsis">
+
+
           <el-link
             :href="dialog.album._links.html"
             target="_blank"
             type="primary"
             :title="dialog.album.name"
-            style="vertical-align:top"
           >{{dialog.album.name}}</el-link>
-          - {{ dialog.album.size |size }}
-          <el-link :href="getDeleteUrl(dialog.album)" target="_blank" type="danger" style="vertical-align:top">删除</el-link>
+          <span>- {{ dialog.album.size |size }}</span>
+          <el-link :href="getDeleteUrl(dialog.album)" target="_blank" type="danger" style="float:right">删除</el-link>
         </div>
         <i
           @click="next"
@@ -188,4 +189,16 @@ export default {
     right: 0;
   }
 }
+#covers-container{
+  .text-ellipsis{
+    &>a{
+      vertical-align: top;
+    }
+    &>span{
+      vertical-align: bottom;
+      display: inline-block;
+    }
+  }
+}
+
 </style>
