@@ -83,7 +83,7 @@ export default {
     srcList() {
       return this.covers.map(
         (r) =>
-          `https://raw.githubusercontent.com/${process.env.AUTHOR}/${process.env.REPO}/${process.env.BRANCH}/${r.path}`
+          `https://raw.githubusercontent.com/${process.env.AUTHOR}/${process.env.REPO}/${process.env.BRANCH}/${encodeURI(r.path)}`
       );
     },
   },
