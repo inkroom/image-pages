@@ -34,6 +34,7 @@ router.beforeEach((to, from, next) => {
   // loading = Loading.service({
   //   text: "router 正在努力加载中..."
   // });
+  console.log(to)
   next();
 })
 

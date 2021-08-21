@@ -45,7 +45,7 @@ export default {
     push(name){
       this.$store.commit('loading',true);
       console.log('设置loading')
-      this.$router.push(name)
+      this.$router.push(encodeURIComponent(name))
     },
     getImgUrl(album) {
       return `https://raw.githubusercontent.com/${process.env.AUTHOR}/${

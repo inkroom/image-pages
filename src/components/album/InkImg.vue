@@ -1,23 +1,22 @@
 <template>
   <div class="img-container">
-    <div v-if="loading && status=='loading'">
-      <i class="el-icon-loading"></i>
-    </div>
-    <div v-else-if="loading && status=='error'">
-      <i class="el-icon-picture-outline"></i>
-    </div>
-    <img
-      v-if="loadable"
-      :src="src"
+    <el-image
       :style="imgStyle"
-      @error="()=>{this.status='error';this.$emit('status',this.status);this.$emit('update:s',this.status)}"
-      @load="()=>{this.status='normal';this.$emit('status',this.status);this.$emit('update:s',this.status)}"
-      v-show="!loading || status=='normal'"
+      :src="src"
+      :preview-src-list="srcList"
+      :lazy="lazy"
+      fit="contain"
     >
+      <div slot="placeholder">
+        <i class="el-icon-loading"></i>
+      </div>
+      <div slot="error">
+        <i class="el-icon-picture-outline"></i>
+      </div>
+    </el-image>
   </div>
 </template>
 <script>
-
 export default {
   name: "InkImg",
   props: {
@@ -26,64 +25,13 @@ export default {
     lazy: {
       //是否开启懒加载
       type: Boolean,
-      default: false
+      default: false,
     },
-    loading: {
-      //是否loading
-      type: Boolean,
-      default: true
+    srcList: {
+      type: Array,
+      default: () => [],
     },
-    s: String
   },
-  watch: {
-    src(nv) {
-      if (this.loading) this.status = "loading";
-      else
-      this.$emit("update:s", this.status);
-    },
-    status(nv) {
-
-      // this.$emit("update:s", nv);
-    }
-  },
-  created() {
-    this.$emit("update:s", this.status);
-  },
-  data() {
-    return {
-      status: this.loading? "loading":"normal",
-      startLoad: false
-    };
-  },
-  computed: {
-    loadable() {
-      if (this.lazy) return this.startLoad;
-      return true;
-    }
-  },
-  mounted() {
-    if (this.lazy) {
-      document.addEventListener("scroll", this.lazyLoad);
-      this.lazyLoad();
-    }
-  },
-  destroyed() {
-    if (this.lazy) {
-      document.removeEventListener("scroll", this.lazyLoad);
-    }
-  },
-  methods: {
-    lazyLoad() {
-      var t =
-        document.documentElement.clientHeight +
-        (document.body.scrollTop || document.documentElement.scrollTop);
-
-      if (this.$el.offsetTop < t) {
-        this.startLoad = true;
-        document.removeEventListener("scroll", this.lazyLoad);
-      }
-    }
-  }
 };
 </script>
 
@@ -94,6 +42,9 @@ export default {
   text-align: center;
   overflow: hidden;
 
+  .el-image__inner {
+    vertical-align: middle;
+  }
   .el-icon-loading,
   .el-icon-picture-outline {
     font-size: 60px;
