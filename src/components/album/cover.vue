@@ -48,7 +48,7 @@ export default {
       this.$router.push(encodeURIComponent(name))
     },
     getImgUrl(album) {
-      return `https://raw.githubusercontent.com/${process.env.AUTHOR}/${
+      return `https://gitraw.inkroom.cn/${process.env.AUTHOR}/${
         process.env.REPO
       }/${process.env.BRANCH}/${album.name}/${album.cover}`;
     },
@@ -64,7 +64,7 @@ export default {
 
       axios
         .get(
-          `https://raw.githubusercontent.com/${process.env.AUTHOR}/${
+          `https://gitraw.inkroom.cn/${process.env.AUTHOR}/${
             process.env.REPO
           }/${process.env.BRANCH}/config.json`
         )

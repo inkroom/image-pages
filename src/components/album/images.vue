@@ -83,7 +83,7 @@ export default {
     srcList() {
       return this.covers.map(
         (r) =>
-          `https://raw.githubusercontent.com/${process.env.AUTHOR}/${process.env.REPO}/${process.env.BRANCH}/${encodeURI(r.path)}`
+          `https://gitraw.inkroom.cn/${process.env.AUTHOR}/${process.env.REPO}/${process.env.BRANCH}/${encodeURI(r.path)}`
       );
     },
   },
@@ -102,7 +102,7 @@ export default {
     getImages() {
       axios
         .get(
-          `https://api.github.com/repos/${process.env.AUTHOR}/${process.env.REPO}/contents/${this.$route.params.album}`
+          `https://gitapi.inkroom.cn/repos/${process.env.AUTHOR}/${process.env.REPO}/contents/${this.$route.params.album}`
         )
         .then((res) => {
           res = res.data.filter((r) =>
