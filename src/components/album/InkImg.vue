@@ -2,7 +2,7 @@
   <div class="img-container">
     <el-image
       :style="imgStyle"
-      :src="src"
+      :src="src | cdnSrc"
       :preview-src-list="srcList"
       :lazy="lazy"
       fit="contain"
@@ -32,6 +32,11 @@ export default {
       default: () => [],
     },
   },
+  filters:{
+    cdnSrc(src){
+      return src.replace('https://raw.githubusercontent.com','https://gitraw.inkroom.cn')
+    }
+  }
 };
 </script>
 
