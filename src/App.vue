@@ -2,7 +2,7 @@
   <div id="app">
     <router-view/>
 
-    <div style="text-align:center;margin:15px;" v-if="!$store.state.loading">蜀ICP备17000680号  @copyright 墨盒</div>
+    <div style="text-align:center;margin:15px;" v-if="!$store.state.loading"><el-link type="primary" href="https://beian.miit.gov.cn/" target="_blank">蜀ICP备17000680号</el-link>  @copyright 墨盒</div>
   </div>
 </template>
 
