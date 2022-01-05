@@ -48,9 +48,10 @@ export default {
       this.$router.push(encodeURIComponent(name))
     },
     getImgUrl(album) {
-      return `https://gitraw.inkroom.cn/${process.env.AUTHOR}/${
-        process.env.REPO
-      }/${process.env.BRANCH}/${album.name}/${album.cover}`;
+      // return `https://gitraw.inkroom.cn/${process.env.AUTHOR}/${
+      //   process.env.REPO
+      // }/${process.env.BRANCH}/${album.name}/${album.cover}`;
+      return `http://image.inkroom.cn/raw/${album.name}/${album.cover}`;
     },
     getImages() {
       console.log("发送githu");
@@ -64,9 +65,10 @@ export default {
 
       axios
         .get(
-          `https://gitraw.inkroom.cn/${process.env.AUTHOR}/${
-            process.env.REPO
-          }/${process.env.BRANCH}/config.json`
+          // `https://gitraw.inkroom.cn/${process.env.AUTHOR}/${
+          //   process.env.REPO
+          // }/${process.env.BRANCH}/config.json`
+          `http://image.inkroom.cn/raw/config.json`
         )
         .then(res => {
           console.log(res.data);

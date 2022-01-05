@@ -83,7 +83,8 @@ export default {
     srcList() {
       return this.covers.map(
         (r) =>
-          `https://gitraw.inkroom.cn/${process.env.AUTHOR}/${process.env.REPO}/${process.env.BRANCH}/${encodeURI(r.path)}`
+          // `https://gitraw.inkroom.cn/${process.env.AUTHOR}/${process.env.REPO}/${process.env.BRANCH}/${encodeURI(r.path)}`
+          `http://image.inkroom.cn/raw/${encodeURI(r.path)}`
       );
     },
   },
@@ -102,11 +103,13 @@ export default {
     getImages() {
       axios
         .get(
-          `https://gitapi.inkroom.cn/repos/${process.env.AUTHOR}/${process.env.REPO}/contents/${this.$route.params.album}`
+          // `https://gitapi.inkroom.cn/repos/${process.env.AUTHOR}/${process.env.REPO}/contents/${this.$route.params.album}`
+          `https://image.inkroom.cn/list/${this.$route.params.album}/list`
         )
         .then((res) => {
           res = res.data.filter((r) =>
-            /\.(jpg|jpeg|gif|bmp|png)$/.test(r.download_url)
+            // /\.(jpg|jpeg|gif|bmp|png)$/.test(r.download_url)
+            /\.(jpg|jpeg|gif|bmp|png)$/.test(r)
           );
           this.covers = res;
         })
