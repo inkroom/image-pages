@@ -34,7 +34,9 @@ export default {
   },
   filters:{
     cdnSrc(src){
-      return src.replace('https://raw.githubusercontent.com','https://gitraw.inkroom.cn')
+      console.log(src);
+      return src;
+      // return src.replace('https://raw.githubusercontent.com','https://gitraw.inkroom.cn')
     }
   }
 };

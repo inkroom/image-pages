@@ -104,14 +104,19 @@ export default {
       axios
         .get(
           // `https://gitapi.inkroom.cn/repos/${process.env.AUTHOR}/${process.env.REPO}/contents/${this.$route.params.album}`
-          `https://image.inkroom.cn/list/${this.$route.params.album}/list`
+          `http://image.inkroom.cn/list/${this.$route.params.album}/list`
         )
         .then((res) => {
-          res = res.data.filter((r) =>
-            // /\.(jpg|jpeg|gif|bmp|png)$/.test(r.download_url)
-            /\.(jpg|jpeg|gif|bmp|png)$/.test(r)
-          );
-          this.covers = res;
+          // res = res.data.filter((r) =>
+          //   // /\.(jpg|jpeg|gif|bmp|png)$/.test(r.download_url)
+          //   /\.(jpg|jpeg|gif|bmp|png)$/.test(r)
+          // );
+          this.covers = res.data.split("\r\n").map((r) => {
+            return {
+              name: r.substr(0, r.lastIndexOf(".")),
+              download_url: `http://image.inkroom.cn/raw/${this.$route.params.album}/${r}`,
+            };
+          });
         })
         .catch((e) => {
           this.$alert(` ${this.$route.params.album} 暂不可用`);
