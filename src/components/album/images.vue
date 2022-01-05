@@ -113,6 +113,7 @@ export default {
           // );
           this.covers = res.data.split("\r\n").map((r) => {
             return {
+              path:`${this.$route.params.album}/${r}`,
               name: r.substr(0, r.lastIndexOf(".")),
               download_url: `http://image.inkroom.cn/raw/${this.$route.params.album}/${r}`,
             };
