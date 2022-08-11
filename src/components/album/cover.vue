@@ -68,7 +68,7 @@ export default {
           // `https://gitraw.inkroom.cn/${process.env.AUTHOR}/${
           //   process.env.REPO
           // }/${process.env.BRANCH}/config.json`
-          `http://image.inkroom.cn/raw/config.json`
+          `http://image.inkroom.cn/raw/config.json?r=${Math.random()}`
         )
         .then(res => {
           console.log(res.data);

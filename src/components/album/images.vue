@@ -104,7 +104,7 @@ export default {
       axios
         .get(
           // `https://gitapi.inkroom.cn/repos/${process.env.AUTHOR}/${process.env.REPO}/contents/${this.$route.params.album}`
-          `http://image.inkroom.cn/list/${this.$route.params.album}/list`
+          `http://image.inkroom.cn/list/${this.$route.params.album}/list?r=${Math.random()}`
         )
         .then((res) => {
           // res = res.data.filter((r) =>
