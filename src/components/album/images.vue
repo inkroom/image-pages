@@ -115,7 +115,7 @@ export default {
             return {
               path:`${this.$route.params.album}/${r}`,
               name: r.substr(0, r.lastIndexOf(".")),
-              download_url: `http://image.inkroom.cn/raw/${this.$route.params.album}/${r}`,
+              download_url: `http://image.inkroom.cn/raw/${encodeURI(this.$route.params.album)}/${encodeURI(r)}`,
             };
           });
         })
