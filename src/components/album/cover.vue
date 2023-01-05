@@ -51,7 +51,7 @@ export default {
       // return `https://gitraw.inkroom.cn/${process.env.AUTHOR}/${
       //   process.env.REPO
       // }/${process.env.BRANCH}/${album.name}/${album.cover}`;
-      return `http://image.inkroom.cn/raw/${album.name}/${album.cover}`;
+      return `${location.protocol}//image.inkroom.cn/raw/${album.name}/${album.cover}`;
     },
     getImages() {
       console.log("发送githu");
@@ -68,7 +68,7 @@ export default {
           // `https://gitraw.inkroom.cn/${process.env.AUTHOR}/${
           //   process.env.REPO
           // }/${process.env.BRANCH}/config.json`
-          `http://image.inkroom.cn/raw/config.json?r=${Math.random()}`
+          `${location.protocol}//image.inkroom.cn/raw/config.json?r=${Math.random()}`
         )
         .then(res => {
           console.log(res.data);
