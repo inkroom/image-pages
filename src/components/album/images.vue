@@ -36,6 +36,7 @@
             :srcList="srcList"
             style="height: 160px; line-height: 160px"
             :imgStyle="{ maxWidth: '100%', verticalAlign: 'middle' }"
+            :initialIndex="j"
             lazy
           ></InkImg>
           <div style="padding: 5px" class="text-ellipsis name">
@@ -101,23 +102,52 @@ export default {
       this.$router.push("/");
     },
     getImages() {
+      // 首先请求使用了图床的列表，图床经过压缩的
       axios
         .get(
-          // `https://gitapi.inkroom.cn/repos/${process.env.AUTHOR}/${process.env.REPO}/contents/${this.$route.params.album}`
-          `${location.protocol}//image.inkroom.cn/list/${this.$route.params.album}/list?r=${Math.random()}`
+          `${location.protocol}//image.inkroom.cn/raw/list/${
+            this.$route.params.album
+          }.list?r=${Math.random()}`
         )
         .then((res) => {
-          // res = res.data.filter((r) =>
-          //   // /\.(jpg|jpeg|gif|bmp|png)$/.test(r.download_url)
-          //   /\.(jpg|jpeg|gif|bmp|png)$/.test(r)
-          // );
-          this.covers = res.data.split("\r\n").map((r) => {
+          this.covers = res.data.split("\n").filter(r=>!!r && r.length>1).map((r) => {
+            // 一般 长这样 99976123_p0.jpg-{"success":true,"result":["https://i0.hdslb.com/bfs/album/82d43c529124f997e3771644dbba91a3ad1c8a31.jpg"]}
+            var rs = r.split("-");
+            var j = JSON.parse(rs[1]);
             return {
-              path:`${this.$route.params.album}/${r}`,
-              name: r.substr(0, r.lastIndexOf(".")),
-              download_url: `${location.protocol}//image.inkroom.cn/raw/${encodeURI(this.$route.params.album)}/${encodeURI(r)}`,
+              path: `${this.$route.params.album}/${rs[0]}`,
+              name: rs[0].substr(0, r.lastIndexOf(".")),
+              download_url: j.result[0],
             };
           });
+        })
+        .catch((e) => {
+          console.log("降级了",e);
+          // 没有的话降级使用原图
+          return axios
+            .get(
+              // `https://gitapi.inkroom.cn/repos/${process.env.AUTHOR}/${process.env.REPO}/contents/${this.$route.params.album}`
+              `${location.protocol}//image.inkroom.cn/list/${
+                this.$route.params.album
+              }/list?r=${Math.random()}`
+            )
+            .then((res) => {
+              // res = res.data.filter((r) =>
+              //   // /\.(jpg|jpeg|gif|bmp|png)$/.test(r.download_url)
+              //   /\.(jpg|jpeg|gif|bmp|png)$/.test(r)
+              // );
+              this.covers = res.data.split("\r\n").map((r) => {
+                return {
+                  path: `${this.$route.params.album}/${r}`,
+                  name: r.substr(0, r.lastIndexOf(".")),
+                  download_url: `${
+                    location.protocol
+                  }//image.inkroom.cn/raw/${encodeURI(
+                    this.$route.params.album
+                  )}/${encodeURI(r)}`,
+                };
+              });
+            });
         })
         .catch((e) => {
           this.$alert(` ${this.$route.params.album} 暂不可用`);

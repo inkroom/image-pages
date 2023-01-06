@@ -4,8 +4,10 @@
       :style="imgStyle"
       :src="src | cdnSrc"
       :preview-src-list="srcList"
+      :initial-index="initialIndex"
       :lazy="lazy"
       fit="contain"
+      referrerpolicy='no-referrer'
     >
       <div slot="placeholder">
         <i class="el-icon-loading"></i>
@@ -31,6 +33,7 @@ export default {
       type: Array,
       default: () => [],
     },
+    initialIndex: Number
   },
   filters:{
     cdnSrc(src){
