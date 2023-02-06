@@ -23,3 +23,8 @@ web浏览地址
 
 
 download分支是一个java的图片下载程序，用来下载图片仓库的图片的，因为[仓库](https://github.com/inkroom/image)太大了，clone基本不成功
+
+
+---
+
+构建使用的node版本为 node v14.21.2 npm v6.14.17

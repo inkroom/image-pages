@@ -1,10 +1,10 @@
 <template>
   <div class="img-container">
-    <el-image
+    <ink-el-image
       :style="imgStyle"
       :src="src | cdnSrc"
       :preview-src-list="srcList"
-      :initial-index="initialIndex"
+      :initialIndex="initialIndex"
       :lazy="lazy"
       fit="contain"
       referrerpolicy='no-referrer'
@@ -15,12 +15,14 @@
       <div slot="error">
         <i class="el-icon-picture-outline"></i>
       </div>
-    </el-image>
+    </ink-el-image>
   </div>
 </template>
 <script>
+import InkElImage from '../image/main';
 export default {
   name: "InkImg",
+  components:{InkElImage},
   props: {
     src: String,
     imgStyle: Object,
