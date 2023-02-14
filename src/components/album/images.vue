@@ -110,19 +110,29 @@ export default {
           }.list?r=${Math.random()}`
         )
         .then((res) => {
-          this.covers = res.data.split("\n").filter(r=>!!r && r.length>1).map((r) => {
-            // 一般 长这样 99976123_p0.jpg-{"success":true,"result":["https://i0.hdslb.com/bfs/album/82d43c529124f997e3771644dbba91a3ad1c8a31.jpg"]}
-            var rs = r.split("-");
-            var j = JSON.parse(rs[1]);
-            return {
-              path: `${this.$route.params.album}/${rs[0]}`,
-              name: rs[0].substr(0, r.lastIndexOf(".")),
-              download_url: j.result[0],
-            };
-          });
+          this.covers = res.data
+            .split("\n")
+            .filter((r) => !!r && r.length > 1)
+            .map((r) => {
+              // 一般 长这样 99976123_p0.jpg-{"success":true,"result":["https://i0.hdslb.com/bfs/album/82d43c529124f997e3771644dbba91a3ad1c8a31.jpg"]}
+              // 没有缩略图的就 长这样 99976123_p0.jpg
+              var rs = r.split("-");
+              var j = `${location.protocol}//image.inkroom.cn/raw/${encodeURI(
+                this.$route.params.album
+              )}/${encodeURI(rs[0])}`;
+              if (rs.length > 1) {
+                j = JSON.parse(rs[1]).result[0];
+              }
+
+              return {
+                path: `${this.$route.params.album}/${rs[0]}`,
+                name: rs[0].substr(0, r.lastIndexOf(".")),
+                download_url: j,
+              };
+            });
         })
         .catch((e) => {
-          console.log("降级了",e);
+          console.log("降级了", e);
           // 没有的话降级使用原图
           return axios
             .get(
