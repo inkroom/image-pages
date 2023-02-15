@@ -51,6 +51,9 @@ export default {
       // return `https://gitraw.inkroom.cn/${process.env.AUTHOR}/${
       //   process.env.REPO
       // }/${process.env.BRANCH}/${album.name}/${album.cover}`;
+      if(album.url){
+        return album.url;
+      }
       return `${location.protocol}//image.inkroom.cn/raw/${album.name}/${album.cover}`;
     },
     getImages() {

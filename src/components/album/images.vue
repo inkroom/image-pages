@@ -119,13 +119,20 @@ export default {
               var rs = r.split("-");
               var j = `${location.protocol}//image.inkroom.cn/raw/${encodeURI(
                 this.$route.params.album
-              )}/${encodeURI(rs[0])}`;
+              )}/${encodeURI(r)}`;
               if (rs.length > 1) {
-                j = JSON.parse(rs[1]).result[0];
+                j = JSON.parse(rs[rs.length - 1]).result[0]; // 文件名中可能包括 分隔符，但是缩略图的图床里一般不会有，所以可以正常使用
               }
 
               return {
-                path: `${this.$route.params.album}/${rs[0]}`,
+                path: `${this.$route.params.album}/${
+                  r.indexOf("{") == -1
+                    ? r
+                    : r.substr(
+                        0,
+                        r.lastIndexOf("{") - 1
+                      )
+                }`,
                 name: rs[0].substr(0, r.lastIndexOf(".")),
                 download_url: j,
               };
