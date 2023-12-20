@@ -1,0 +1,62 @@
+name: build
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: [ "master" ]
+    paths-ignore:
+      - '.github/**'
+      - 'README.md'
+  pull_request:
+    branches: [ "master" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-20.04
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - name: Encoding
+        run: |
+          git config --global i18n.logoutputencoding utf-8
+          git config --global i18n.commitencoding utf-8
+          git config --global core.quotepath false
+          export LESSCHARSET=utf-8
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          # We need to fetch all branches and commits so that Nx affected has a base to compare against.
+          fetch-depth: 0
+      # - name: Last Success SHA
+      #   uses: nrwl/nx-set-shas@v3
+      #   id: sha
+      #   with:
+      #     main-branch-name: "master"
+      - name: Build
+        run: |
+          rm -rf docs
+          docker build . -t temp_docs
+          docker run -itd --rm --name temp_docs temp_docs bash
+          docker cp temp_docs:/app/docs ./
+      - name: Push
+        env:
+          GH_TOKEN: ${{ github.token }}
+        permissions: 
+          contents: write
+        run: |
+            if [ -n "$(git status -s list)" ];then
+              git status
+              git config user.email "enpassPixiv@protonmail.com"
+              git config user.name "Action Robot"
+              git add docs
+              git commit -m "Update Pages By Action Robot"
+              git push
+            fi

@@ -16,7 +16,7 @@
 --- 
 web浏览地址
 
-[http://image.inkroom.cn/](http://image.inkroom.cn/)
+[https://image.inkroom.cn/](https://image.inkroom.cn/)
 
 
 ---
@@ -28,3 +28,5 @@ download分支是一个java的图片下载程序，用来下载图片仓库的�
 ---
 
 构建使用的node版本为 node v14.21.2 npm v6.14.17
+
+使用Dockerfile直接构建即可
