@@ -8,6 +8,7 @@ on:
     paths-ignore:
       - '.github/**'
       - 'README.md'
+      - 'docs/**'
   pull_request:
     branches: [ "master" ]
 
@@ -52,7 +53,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
 
         run: |
-            if [ -n "$(git status -s list)" ];then
+            if [ -n "$(git status -s docs)" ];then
               git status
               git config user.email "enpassPixiv@protonmail.com"
               git config user.name "Action Robot"
