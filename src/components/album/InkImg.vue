@@ -1,6 +1,6 @@
 <template>
   <div class="img-container">
-    <ink-el-image
+    <el-image
       :style="imgStyle"
       :src="src | cdnSrc"
       :preview-src-list="srcList"
@@ -15,14 +15,12 @@
       <div slot="error">
         <i class="el-icon-picture-outline"></i>
       </div>
-    </ink-el-image>
+    </el-image>
   </div>
 </template>
 <script>
-import InkElImage from '../image/main';
 export default {
   name: "InkImg",
-  components:{InkElImage},
   props: {
     src: String,
     imgStyle: Object,

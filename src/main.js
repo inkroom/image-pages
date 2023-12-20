@@ -7,8 +7,9 @@ import router from './router'
 
 
 import ElementUI from 'element-ui'
-import 'element-theme-dark';
-// import 'element-ui/lib/theme-chalk/index.css'
+
+import 'element-ui/lib/theme-chalk/index.css'
+import 'element-theme-dark';// 只用这个有图标丢失，可能是因为太久不更新了
 Vue.use(ElementUI)
 
 // import { Loading } from ElementUI;
