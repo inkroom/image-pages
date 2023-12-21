@@ -1,18 +1,15 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
-import Vuex from 'vuex';
-import App from './App'
+import App from './App.vue'
 import router from './router'
-
-
+import Vuex from 'vuex'
 import ElementUI from 'element-ui'
 
 import 'element-ui/lib/theme-chalk/index.css'
 import 'element-theme-dark';// 只用这个有图标丢失，可能是因为太久不更新了
 Vue.use(ElementUI)
 
-// import { Loading } from ElementUI;
+Vue.config.productionTip = false
+Vue.use(Vuex)
 
 let loadingInstance = false;
 
@@ -20,9 +17,11 @@ loadingInstance = ElementUI.Loading.service({
   text: "正在努力加载中..."
 });
 
-const store = new Vuex.Store({
+let store = new Vuex.Store({
   state: {
     loading: true
+  },
+  getters: {
   },
   mutations: {
     loading(state,loading){
@@ -38,14 +37,15 @@ const store = new Vuex.Store({
 
       }
     }
+  },
+  actions: {
+  },
+  modules: {
   }
 })
 
-/* eslint-disable no-new */
 new Vue({
-  el: '#app',
   router,
   store,
-  components: { App },
-  template: '<App/>'
-})
+  render: function (h) { return h(App) }
+}).$mount('#app')

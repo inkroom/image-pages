@@ -17,7 +17,7 @@
 <script>
 import InkImg from "./InkImg";
 
-import { Loading } from "element-ui";
+
 import axios from "axios";
 
 export default {

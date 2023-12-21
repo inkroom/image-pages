@@ -1,45 +1,27 @@
 import Vue from 'vue'
-import Router from 'vue-router'
-
-
-import { Loading } from "element-ui";
-
+import VueRouter from 'vue-router'
 
 import Album from '@/components/album/cover'
 import Images from '@/components/album/images';
-Vue.use(Router)
+Vue.use(VueRouter)
 
+const routes = [
+  {
+    path: '/',
+    name: '/',
+    component: Album
+  },
+  {
+    path: '/:album',
+    name: '/album',
+    component: Images
+  }
+]
 
-const router = new Router({
+const router = new VueRouter({
   mode: 'history',
-  routes: [
-    {
-      path: '/',
-      name: '/',
-      component: Album
-    },
-    {
-      path: '/:album',
-      name: '/album',
-      component: Images
-    }
-  ],
-
+  base: process.env.BASE_URL,
+  routes
 })
 
-let loading = null;
-
-router.beforeEach((to, from, next) => {
-  console.log('开始router loading')
-  // loading = Loading.service({
-  //   text: "router 正在努力加载中..."
-  // });
-  console.log(to)
-  next();
-})
-
-router.afterEach((to, from) => {
-  // loading.close();
-})
-
-export default router;
+export default router
