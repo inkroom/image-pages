@@ -15,7 +15,7 @@
   </div>
 </template>
 <script>
-import InkImg from "./InkImg";
+import InkImg from "@/components/album/InkImg";
 
 
 import axios from "axios";

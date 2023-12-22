@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import Album from '@/components/album/cover'
-import Images from '@/components/album/images';
+import Album from './cover'
+import Images from './images';
 Vue.use(VueRouter)
 
 const routes = [

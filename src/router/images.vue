@@ -48,7 +48,7 @@
   </div>
 </template>
 <script>
-import InkImg from "./InkImg";
+import InkImg from "@/components/album/InkImg";
 
 import axios from "axios";
 
@@ -84,6 +84,7 @@ export default {
     srcList() {
       return this.covers.map(
         (r) =>
+         r.download_url.indexOf('@1e_1c.webp')!=-1?r.download_url.replace('@1e_1c.webp','') : 
           // `https://gitraw.inkroom.cn/${process.env.AUTHOR}/${process.env.REPO}/${process.env.BRANCH}/${encodeURI(r.path)}`
           `${location.protocol}//image.inkroom.cn/raw/${encodeURI(r.path)}`
       );
