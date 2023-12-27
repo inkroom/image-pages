@@ -1,51 +1,47 @@
-import Vue from 'vue'
+import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
-import Vuex from 'vuex'
-import ElementUI from 'element-ui'
 
-import 'element-ui/lib/theme-chalk/index.css'
-import 'element-theme-dark';// 只用这个有图标丢失，可能是因为太久不更新了
-Vue.use(ElementUI)
+import ViewUIPlus,{Spin} from 'view-ui-plus'
+import '@/style/style.less'
+// import 'view-ui-plus/dist/styles/viewuiplus.css'
+// import ElementPlus from 'element-plus'
+// import { ElLoading } from 'element-plus'
 
-Vue.config.productionTip = false
-Vue.use(Vuex)
+// import 'element-plus/dist/index.css'
+// import 'element-plus/theme-chalk/dark/css-vars.css'
+
+// import '@/style/style.css';
 
 let loadingInstance = false;
 
-loadingInstance = ElementUI.Loading.service({
-  text: "正在努力加载中..."
-});
+// loadingInstance = ElLoading.service({
+//   text: "正在努力加载中..."
+// });
 
-let store = new Vuex.Store({
-  state: {
-    loading: true
-  },
-  getters: {
-  },
-  mutations: {
-    loading(state,loading){
-      state.loading = loading;
-      if(loading){
-        loadingInstance = ElementUI.Loading.service({
-          text: "正在努力加载中..."
-        });
-      }else{
-        console.log('关闭loading')
-                loadingInstance &&  loadingInstance.close();
-                loadingInstance = null;
 
-      }
+window.startLoading = ()=>{
+  console.log("loadingssss")
+  Spin.show({
+    render: (h) => {
+        return h('div', [
+            h('Icon', {
+                'class': 'demo-spin-icon-load',
+                props: {
+                    type: 'ios-loading',
+                    size: 18
+                }
+            }),
+            h('div', '正在努力加载中...')
+        ])
     }
-  },
-  actions: {
-  },
-  modules: {
-  }
 })
+}
 
-new Vue({
-  router,
-  store,
-  render: function (h) { return h(App) }
-}).$mount('#app')
+window.hide=()=>{
+  Spin.hide();
+}
+
+startLoading();
+
+createApp(App).use(router).use(ViewUIPlus).mount('#app')

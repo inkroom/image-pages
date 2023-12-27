@@ -1,16 +1,26 @@
-/**
- * @type {import('@vue/cli-service').ProjectOptions}
- */
 module.exports = {
-    outputDir:'docs',
-    assetsDir:'static',
-    productionSourceMap: false,
-    configureWebpack:{
-        externals: {
-        vue: 'Vue'
-        , 'element-ui': 'ELEMENT',
-        'vue-router': 'VueRouter'
-      },
+  outputDir: 'docs',
+  productionSourceMap: false,
+  configureWebpack: config => {
+    if (process.env.NODE_ENV === 'production') {
+      return {
+          externals: {
+          vue: 'Vue'
+          , 'view-ui-plus': 'ViewUIPlus',
+          'vue-router': 'VueRouter'
+        },
+      }
+    } 
+    return {}
+  },
+  css: {
+    loaderOptions:{
+      less:{
+        lessOptions:{
+          javascriptEnabled: true
+        }
+        
+      }
     }
-    
   }
+}

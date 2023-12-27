@@ -1,27 +1,24 @@
 <template>
-  <div id="covers-container" v-if="!$store.state.loading">
+  <div id="covers-container" >
     <!-- <el-backtop target=".page-component__scroll .el-scrollbar__wrap"></el-backtop> -->
     <div>
-      <span style="vertical-align: bottom; font-size: 20px"
-        >共 {{ covers.length }} 张</span
-      >
-
-      <el-link
+      <span style="vertical-align: bottom; font-size: 20px; color: white;"
+        >共 {{ covers.length }} 张</span>
+      <a 
+        href="javascript:void(0);"
         @click.native="home"
         style="font-size: 20px"
         class="el-link el-link--primary is-underline"
-        >首页</el-link
-      >
-      <el-link
-        :href="url.upload"
+        >首页</a>
+      <!-- <router-link
+        :to="url.upload"
         target="_blank"
         type="primary"
         style="font-size: 20px"
-        >上传图片</el-link
-      >
+        >上传图片</router-link> -->
     </div>
-    <el-row :gutter="20">
-      <el-col
+    <Row :gutter="20">
+      <Col
         v-for="(cell, j) in covers"
         :key="j"
         :xs="24"
@@ -30,7 +27,7 @@
         :lg="4"
         :xl="3"
       >
-        <el-card :style="{ cursor: album ? 'auto' : 'pointer' }">
+        <Card :style="{ cursor: album ? 'auto' : 'pointer' }"  @click="click(j)" :bordered="false">
           <InkImg
             :src="cell.download_url"
             :srcList="srcList"
@@ -42,20 +39,29 @@
           <div style="padding: 5px" class="text-ellipsis name">
             <span :title="cell.name">{{ cell.name }}</span>
           </div>
-        </el-card>
-      </el-col>
-    </el-row>
+        </Card>
+      </Col>
+    </Row>
+    <InkImagePreview
+                v-model="imagePreviewModal"
+                :preview-list="srcList"
+                :initial-index="initialIndex"
+                referrerPolicy='no-referrer'
+            />
   </div>
 </template>
 <script>
 import InkImg from "@/components/album/InkImg";
+import InkImagePreview from '@/components/album/image/image-preview.vue'
 
 import axios from "axios";
 
 export default {
-  components: { InkImg },
+  components: { InkImg,InkImagePreview },
   data() {
     return {
+      imagePreviewModal:false,
+      initialIndex:-1,
       style: "max-width:260px",
       limit: {
         col: 6, //每行最多6个,最好能和24整除
@@ -90,7 +96,7 @@ export default {
       );
     },
   },
-  destroyed() {
+  unmounted() {
     window.removeEventListener("popstate", this.popstate);
   },
   created() {
@@ -98,8 +104,12 @@ export default {
     this.getImages();
   },
   methods: {
+    click(index){
+      this.initialIndex = index;
+      this.imagePreviewModal = true;
+    },
     home() {
-      this.$store.commit("loading", true);
+      window.hide();
       this.$router.push("/");
     },
     getImages() {
@@ -172,8 +182,8 @@ export default {
           console.error(e);
         })
         .finally((_) => {
-          //  this.loadingInstance.close();
-          this.$store.commit("loading", false);
+          console.log(this.covers);
+          window.hide();
         });
     },
     popstate() {

@@ -1,17 +1,17 @@
 <template>
   <div id="covers-container">
-    <el-row  :gutter="20">
-      <el-col v-for="(cell,j) in covers" :key="j"  :xs="24" :sm="12" :md="6" :lg="4" :xl="3" >
+    <Row  :gutter="20">
+      <Col v-for="(cell,j) in covers" :key="j"  :xs="24" :sm="12" :md="6" :lg="4" :xl="3" >
         <!-- <router-link :to="cell.name" @click="$store.commit('loading',true)"> -->
-          <el-card :style="{cursor:album?'auto':'pointer'}" @click.native="push(cell.name)">
+          <Card :style="{cursor:album?'auto':'pointer'}" @click.native="push(cell.name)" :bordered="false">
             <InkImg :src="getImgUrl(cell)" style="height:160px;line-height:160px;" :imgStyle="{maxWidth:'100%',verticalAlign:'middle'}"></InkImg>
             <div style="padding: 5px;" class="text-ellipsis name">
               <span :title="cell.name">{{cell.name}}</span>
             </div>
-          </el-card>
+          </Card>
         <!-- </router-link> -->
-      </el-col>
-    </el-row>
+      </Col>
+    </Row>
   </div>
 </template>
 <script>
@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     push(name){
-      this.$store.commit('loading',true);
+      window.startLoading();
       console.log('设置loading')
       this.$router.push(encodeURIComponent(name))
     },
@@ -95,8 +95,7 @@ export default {
           
           this.$alert("相册暂不可用");
         }).finally(_=>{
-          // this.loadingInstance.close();
-          this.$store.commit('loading',false)
+          window.hide();
         });
     }
   }
@@ -109,6 +108,9 @@ export default {
   a {
     outline: none;
     text-decoration: none;
+  }
+  .el-col,.ivu-col{
+    margin-bottom: 15px;
   }
 }
 </style>

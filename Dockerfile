@@ -3,5 +3,5 @@ RUN sed -i "s@http://deb.debian.org@https://mirrors.huaweicloud.com@g" /etc/apt/
 ENV LANG "C.UTF-8"
 WORkDIR /app
 COPY . /app
-RUN npm --registry https://registry.npmmirror.com/ i
+RUN  npm --registry https://registry.npmmirror.com/ i && npm --registry https://registry.npmmirror.com/ i -g serve
 RUN npm run build
