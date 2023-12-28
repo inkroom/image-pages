@@ -15,7 +15,7 @@
   </div>
 </template>
 <script>
-import InkImg from "@/components/album/InkImg";
+import InkImg from "@/components/album/InkImg.vue";
 
 
 import axios from "axios";

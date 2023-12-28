@@ -51,7 +51,7 @@
   </div>
 </template>
 <script>
-import InkImg from "@/components/album/InkImg";
+import InkImg from "@/components/album/InkImg.vue";
 import InkImagePreview from '@/components/album/image/image-preview.vue'
 
 import axios from "axios";
@@ -68,8 +68,8 @@ export default {
         span: 4,
       },
       url: {
-        upload: `https://github.com/${process.env.AUTHOR}/${
-          process.env.REPO
+        upload: `https://github.com/${import.meta.env.AUTHOR}/${
+          import.meta.env.REPO
         }/upload/master/${decodeURIComponent(this.$route.params.album)}`,
       },
       covers: [],

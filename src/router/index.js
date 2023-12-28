@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Album from './cover'
-import Images from './images';
+import Album from './cover.vue'
+import Images from './images.vue';
 const routes = [
   {
     path: '/',
@@ -15,7 +15,7 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes
 })
 
