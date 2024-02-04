@@ -348,3 +348,19 @@
         }
     }
 </script>
+
+<style lang="less">
+.ivu-image-preview{
+    .ivu-icon-ios-arrow-back,
+    .ivu-icon-ios-arrow-forward,
+    .ivu-icon-md-close{
+
+        color: #fff;
+        background-color: #606266;
+        border-color: #fff;
+    }
+}
+
+
+
+</style>

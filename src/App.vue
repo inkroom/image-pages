@@ -3,7 +3,7 @@
   <div style="text-align:center;margin:15px;"><a type="primary" href="https://beian.miit.gov.cn/" target="_blank">蜀ICP备17000680号</a>  @copyright 墨盒</div>
 </template>
 
-<style lang="scss">
+<style lang="less">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

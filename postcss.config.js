@@ -1,20 +1,30 @@
-// postcss.config.js
-const url = require('postcss-url');
-module.exports = {
+function replace_font(){
+
+    return {
+        postcssPlugin: 'postcss-replace-font',
+
+          AtRule(atRule, postcss) {
+            // 可以快速访问css如@media，@import等@定义的节点（type为atRule）
+            if (!atRule.nodes)return
+
+
+            for(let i =0;i<atRule.nodes.length;i++){
+                let at = atRule.nodes[i];
+                if(at.prop=='src'){
+                    at.value = 'url("https://element.eleme.io/static/element-icons.535877f.woff") format("woff2")'
+                }
+
+            }
+
+        }
+    }
+}
+
+export default{
     plugins: {
         postcss: {
             plugins: [
-                url({
-                    url: (asset) => {
-                        // 字体文件使用cdn
-                        if (asset.absolutePath.indexOf('ionicons') != -1) {
-                            var u = asset.absolutePath.substring(asset.absolutePath.lastIndexOf('/') + 1);
-                            return `https://cdn.bootcdn.net/ajax/libs/ionicons/3.0.0/fonts/${u}`
-                        }
-                        return asset.url;
-                    },
-                    fallback: 'copy'
-                }),
+                replace_font(),
             ],
         }
     },

@@ -18,11 +18,7 @@
     >
       <template #placeholder>
        
-        <Spin fix>
-          <Icon type="ios-loading" class="el-icon-loading"></Icon> 
-          <!-- 必须有一个其他元素， -->
-          <div style="display: none;">Loading</div>
-        </Spin>
+        <Icon type="ios-loading" class="el-icon-loading"></Icon> 
       </template>
       <template #error>
         <Icon type="ios-image-outline" size="64" class="el-icon-picture-outline" />
@@ -75,7 +71,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="less">
 .img-container {
   width: 100%;
   //   height: 160px;
@@ -95,14 +91,6 @@ export default {
   .ivu-spin-show-text .ivu-spin-dot, .ivu-spin-text{
     display: none;/* 屏蔽默认的样式 */
   }
-  .el-icon-loading{
-        animation: ani-demo-spin 1s linear infinite;
-    }
-    @keyframes ani-demo-spin {
-        from { transform: rotate(0deg);}
-        50%  { transform: rotate(180deg);}
-        to   { transform: rotate(360deg);}
-    }
 
 }
 </style>

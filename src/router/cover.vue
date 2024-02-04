@@ -101,7 +101,7 @@ export default {
   }
 };
 </script>
-<style lang="scss">
+<style lang="less">
 #covers-container {
   margin: 15px auto;
   width: 80%;

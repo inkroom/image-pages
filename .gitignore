@@ -15,4 +15,3 @@ yarn-error.log*
 logs/
 target/
 *.iml
-package-lock.json

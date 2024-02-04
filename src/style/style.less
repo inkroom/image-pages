@@ -16,3 +16,40 @@
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+
+.ivu-icon-ios-image-outline{
+    &::before{
+        content: "\e75e" !important;
+    }
+}
+.ivu-icon-ios-loading{
+    &::before{
+        content: "\e6cf";
+    }
+}
+.el-icon-loading{
+    &::before{
+        content: "\e6cf";
+    }
+    animation: ani-demo-spin 1s linear infinite;
+    @keyframes ani-demo-spin {
+        from { transform: rotate(0deg);}
+        50%  { transform: rotate(180deg);}
+        to   { transform: rotate(360deg);}
+    }
+}
+.ivu-icon-ios-arrow-back{
+    &::before{
+        content: "\e6de";
+    }
+}
+.ivu-icon-ios-arrow-forward{
+    &::before{
+        content: "\e6e0";
+    }
+}
+.ivu-icon-md-close{
+    &::before{
+    content: "\e6db";
+}
+}
