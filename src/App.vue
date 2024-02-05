@@ -1,7 +1,29 @@
 <template>
-  <router-view/>
-  <div style="text-align:center;margin:15px;"><a type="primary" href="https://beian.miit.gov.cn/" target="_blank">蜀ICP备17000680号</a>  @copyright 墨盒</div>
+  <router-view v-show="!show_view"/>
+  <div style="text-align:center;margin:15px;" v-show="!show_view"><a type="primary" href="https://beian.miit.gov.cn/" target="_blank">蜀ICP备17000680号</a>  @copyright 墨盒</div>
 </template>
+
+
+<script>
+
+export default{
+  created(){
+    // window.sta
+  },
+  data(){
+    return {
+      hide_view:window.loading_status
+    }
+  }
+
+  // computed:{
+  //   show_view(){
+  //     console.log('ddd',window.loading)
+  //     return !window.loading_status;
+  //   }
+  // }
+}
+</script>
 
 <style lang="less">
 #app {

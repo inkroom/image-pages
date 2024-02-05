@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     push(name){
-      window.startLoading();
+      window.loading.start();
       console.log('设置loading')
       this.$router.push(encodeURIComponent(name))
     },
@@ -95,7 +95,7 @@ export default {
           
           this.$alert("相册暂不可用");
         }).finally(_=>{
-          window.hide();
+          window.loading.hide();
         });
     }
   }

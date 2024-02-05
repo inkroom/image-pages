@@ -109,7 +109,7 @@ export default {
       this.imagePreviewModal = true;
     },
     home() {
-      window.hide();
+      window.loading.hide();
       this.$router.push("/");
     },
     getImages() {
@@ -183,7 +183,7 @@ export default {
         })
         .finally((_) => {
           console.log(this.covers);
-          window.hide();
+          window.loading.hide();
         });
     },
     popstate() {
