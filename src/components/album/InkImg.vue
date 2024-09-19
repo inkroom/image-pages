@@ -21,7 +21,7 @@
         <Icon type="ios-loading" class="el-icon-loading"></Icon> 
       </template>
       <template #error>
-        <Icon type="ios-image-outline" size="64" class="el-icon-picture-outline" />
+        <Icon type="ios-image-outline" size="64" class="el-icon-picture-outline" :src="src" />
         <!-- <el-icon class="el-icon-picture-outline"><PictureFilled /></el-icon>  -->
       </template>
     </Image> 
